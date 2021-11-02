@@ -4,6 +4,7 @@ from django.http import HttpRequest
 
 # Create your views here.
 
+
 def inicio(request):
     return render(request, 'app/index.html')
 
