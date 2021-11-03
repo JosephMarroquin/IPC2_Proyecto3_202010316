@@ -13,3 +13,9 @@ def peticiones(request):
 
 def ayuda(request):
     return render(request, 'app/ayuda.html')
+
+def resumen(request):
+    return render(request, 'app/resumen.html')
+    
+def rango(request):
+    return render(request, 'app/rango.html')
