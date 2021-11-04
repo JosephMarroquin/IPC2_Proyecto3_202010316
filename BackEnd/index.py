@@ -5,6 +5,7 @@ import json,re
 import xml.etree.ElementTree as xml
 import xml.etree.ElementTree as ET
 import re
+from matplotlib import pyplot as plt
 
 app=Flask(__name__)
 app.config["DEBUG"]=True
@@ -208,10 +209,40 @@ def cargamasiva(data):
     #for x,y,z in zip(a,b,c):
         #print(x,y,z)
 
-    
+#grafica
+def graficaR(data):
 
-
+    fecha=[]
+    total=[]
     
+    for ent in entrada:
+
+        if data==ent.getFecha():
+            fecha.append(ent.getFecha())
+            total.append(ent.getTotal())
+
+    fig, ax = plt.subplots()
+    ax.scatter(fecha, total)
+    plt.savefig('FrontEnd/static/img/graficaResumen.png')
+
+def graficaRango(dataI,dataF):
+
+    fechaR=[]
+    totalR=[]
+    
+    for ent in entrada:
+
+        if dataI==ent.getFecha():
+            if ent.getFecha()<=dataF:
+                fechaR.append(ent.getFecha())
+                totalR.append(ent.getTotal())
+        elif ent.getFecha()<=dataF:
+            fechaR.append(ent.getFecha())
+            totalR.append(ent.getTotal())
+
+    fig, ax = plt.subplots()
+    ax.scatter(fechaR, totalR)
+    plt.savefig('FrontEnd/static/img/graficaRango.png')
 
 #carga masiva
 @app.route('/cargar',methods=['POST'])
@@ -219,6 +250,21 @@ def carga():
     dato = request.json
     cargamasiva(dato['data'])
     return '{"data":"Cargados"}'
+
+#grafica Resumen
+@app.route('/graficaR',methods=['POST'])
+def graficaresumen():
+    dato=request.json
+    graficaR(dato['fecha'])
+    return '{"data":"Creado"}'
+
+
+#grafica Rango
+@app.route('/graficaRango',methods=['POST'])
+def graficarangoo():
+    dato=request.json
+    graficaRango(dato['fechaI'],dato['fechaF'])
+    return '{"data":"Creado"}'
 
 #INICIAR EL SERVIDOR
 if __name__== "__main__": 

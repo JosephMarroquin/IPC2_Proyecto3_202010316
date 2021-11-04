@@ -10,8 +10,6 @@ documentInput.addEventListener('change', (e)=> {
     });
   });
 
-//salida
-
 
 //
 let headers = new Headers()
@@ -54,3 +52,4 @@ function cargar(){
       }
   }
 }
+

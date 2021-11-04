@@ -68,8 +68,33 @@
      
     <div class="content-section-title">Resumen por rango de fechas</div>
     <div class="content-wrapper-context">
-      <button class="content-button">Graficar</button>
-      <button class="content-button">Generar PDF</button>
+
+      <label for="fecha" class="label">Fecha Inicio</label>
+			<input id="fechaI" name="fechaI" type="text" class="content-button" >
+      <label for="fecha" class="label">Fecha Fin</label>
+			<input id="fechaF" name="fechaF" type="text" class="content-button" >
+      <button class="content-button" onclick="graficarRango()">Graficar</button>
+
+
+      <div id="rangoP">
+        <img src="{% static 'img/graficaRango.png' %}" id="contenido1">
+      </div>
+
+      <script>
+        function rangoPDF(){
+          const element=document.getElementById("rangoP");
+          html2pdf().from(element).set({
+                margin: 1,
+                filename: 'resumen rango fechas.pdf',
+                html2canvas: { scale: 5 },
+                jsPDF: {orientation: 'portrait', unit: 'in', format: 'letter', compressPDF: true}
+              })
+          .save();
+      }
+      </script>
+
+
+      <button class="content-button" onclick="rangoPDF()">Generar PDF</button>
      </div>
 
    </div>
@@ -80,8 +105,10 @@
 </div>
 <!-- partial -->
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js'></script>
 <script  src="{% static 'js/script.js' %}"></script>
 <script  src="{% static 'js/funcion.js' %}"></script>
-<script  src="{% static 'js/salida.js' %}"></script>
+<script  src="{% static 'js/resumen.js' %}"></script>
+<script  src="{% static 'js/rango.js' %}"></script>
 </body>
 </html>
